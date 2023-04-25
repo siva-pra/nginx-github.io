@@ -1,7 +1,8 @@
+
 #!/bin/bash
 
 # Installing AWS CLI
-#sudo yum install awscli -y
+sudo yum install awscli -y
 
 # Prompt user to enter AWS account ID
 read -p "Enter your AWS account ID: " account_id
@@ -37,6 +38,9 @@ aws s3 ls
 # Create S3 bucket
 echo "Creating S3 bucket..."
 aws s3api create-bucket --bucket $bucket_name --region $region
+
+# Turn off block public access for the bucket
+aws s3api put-public-access-block --bucket "${bucket_name}" --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
 
 # Copy local files to S3 bucket
 echo "Copying files to S3 bucket..."
